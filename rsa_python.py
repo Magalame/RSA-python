@@ -3,7 +3,6 @@ from timeit import timeit
 import sys
 from math import gcd
 import string
-from multiprocessing import Process
 
 def printf(text):
     sys.stdout.write(str(text)+"\n")
@@ -27,37 +26,6 @@ def does_divide(a,b):
         return True
     else:
         return False
-    
-def wrapper_is_prime(n):
-    #printf("----------is_prime-----------")
-
-#------------------pre testing
-    if n == 2:
-        return True
-    
-    if not n & 1:
-        return False
-    
-    if n<103:
-        bound = n-3
-    else:
-        bound = 100
-        
-#------------------actual miller
-    
-    puissances = puissances_miller(n-1)
-    results = []
-    
-    p = Process(target=f, args=('bob',))
-    p.start()
-    p.join()
-    
-    for i in range(0,bound):
-        if mr_prime_test(n, puissances):
-            pass
-        else:
-            return False
-    return True
 
 def mr_prime_test(n, puissances):
     
@@ -71,14 +39,20 @@ def mr_prime_test(n, puissances):
     #printf("a essayé: " + str(a))
     #a = random.randrange(2,n-2+1)
     #printf("a choisi: " + str(a))
-    if pow(a,puissances[-1],n) == 1:
+    pow1 = pow(a,puissances[-1],n)
+    
+    if pow1 == 1:
+        return True
+    elif pow1 == n-1:
         return True
     
-    for i in reversed(puissances):
+    for i in reversed(puissances[:-1]):
+        
         result = pow(a,i,n)
+        #print(a,i,n, result)
         if result == n-1:
             return True      
-    
+        
 
     #printf("fail")
     return False
@@ -87,9 +61,7 @@ def is_prime(n):
     #printf("----------is_prime-----------")
 
 #------------------pre testing
-    if n == 2:
-        return True
-    
+   
     if not n & 1:
         return False
     
@@ -119,10 +91,10 @@ def prime_gen(nlen):
                 break
             
     while not is_prime(n):
-        n = n+2
+        n = n+2   
     return n
-#https://stackoverflow.com/questions/4798654/modular-multiplicative-inverse-function-in-python
-    
+
+#https://stackoverflow.com/questions/4798654/modular-multiplicative-inverse-function-in-python 
 def egcd(a, b):
     if a == 0:
         return (b, 0, 1)
