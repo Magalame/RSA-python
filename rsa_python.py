@@ -124,7 +124,6 @@ def create_rsa_keys(nlen):
         if e & 1:
             if gcd(e,phi) == 1:
                 break
-
     d = modinv(e, phi)
     return e,d,m
 
