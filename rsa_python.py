@@ -148,9 +148,9 @@ def decrypt_message_parts(message_encrypted_parts, nlen, d, m):
     message_decrypted_parts = []
     
     for i in range(0,len(message_encrypted_parts)):
-        message_decrypted_parts.append(pow(message_encrypted_parts[i],d,m).to_bytes(bound, byteorder='little'))
+        message_decrypted_parts.append(pow(message_encrypted_parts[i],d,m).to_bytes(bound, byteorder='little').decode("utf8").rstrip('\0'))
         
-    return message_decrypted_parts
+    return ''.join(message_decrypted_parts)
 
 
     
