@@ -128,7 +128,7 @@ def create_rsa_keys(nlen):
     d = modinv(e, phi)
     return e,d,m
 
-def encrypt_message_parts(message, nlen, e, m):
+def encrypt(message, nlen, e, m):
     
     bound = nlen//8
     
@@ -141,7 +141,7 @@ def encrypt_message_parts(message, nlen, e, m):
         
     return message_encrypted_parts
 
-def decrypt_message_parts(message_encrypted_parts, nlen, d, m):
+def decrypt(message_encrypted_parts, nlen, d, m):
     
     bound = nlen//8
     
@@ -150,7 +150,9 @@ def decrypt_message_parts(message_encrypted_parts, nlen, d, m):
     for i in range(0,len(message_encrypted_parts)):
         message_decrypted_parts.append(pow(message_encrypted_parts[i],d,m).to_bytes(bound, byteorder='little').decode("utf8").rstrip('\0'))
         
-    return ''.join(message_decrypted_parts)
+    message = ''.join(message_decrypted_parts)
+    
+    return message
 
 
     
