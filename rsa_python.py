@@ -8,37 +8,23 @@ def printf(text):
     sys.stdout.write(str(text)+"\n")
     sys.stdout.flush()
 
+#returns the powers that rabbin mille
 def puissances_miller(nb):
     puissances = []
-    #printf("Calcul des puissances")
     while nb%2 == 0:
         nb=nb//2
         #printf(nb)
         puissances.append(nb)
-    #printf("---------------------")
     if len(puissances) == 0:
         return [nb]
     else:
         return puissances
-    
-def does_divide(a,b):
-    if b%a == 0:
-        return True
-    else:
-        return False
 
+#implementation of miller rabbin
+#we put the 'puissances' as argument so that we don't have to recompute it everytime
 def mr_prime_test(n, puissances):
     
     a = random.randint(2,n-1)
-    #printf("-----------------mr_prime_test--------------")
-    
-    #print(tried_int)
-    
-     #we add one because otherwise the range function stops at n-3
-
-    #printf("a essayé: " + str(a))
-    #a = random.randrange(2,n-2+1)
-    #printf("a choisi: " + str(a))
     pow1 = pow(a,puissances[-1],n)
     
     if pow1 == 1:
@@ -49,16 +35,12 @@ def mr_prime_test(n, puissances):
     for i in reversed(puissances[:-1]):
         
         result = pow(a,i,n)
-        #print(a,i,n, result)
         if result == n-1:
             return True      
-        
-
-    #printf("fail")
+   
     return False
 
 def is_prime(n):
-    #printf("----------is_prime-----------")
 
 #------------------pre testing
    
